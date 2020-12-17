@@ -3,23 +3,32 @@
 /*
 Ввести строку. Вывести её, заменив сокращения на полные слова (т.к. - "так как", т.е. - "то есть", т.д. - "так далее", т.п. - "тому подобное"). Можно использовать английские аналоги.
 */
-void sdvig (char *string, int length, int index, int shift) {
-	int i = 0, j = 0;
-	for (j = 0; j < shift; j++) {
-		for (i = length - 1; i > index; i--) {
-			string[i] = string[i - 1];
-		}
-		index++;
-	}
-}
-
-void paste (char *string, char *word, int index) {
-	int i = 0;
+int strcomp (char *string, char *word) {/*Функция принимает строку и слово, а возвращает индекс первой буквы этого слоова в данной строке*/
+	int i = 0, j = 0, cmp = 0, len = 0, res = -1;
 	while (word[i] != '\0') {
-		string[index] = word[i];
-		index++;
+		len++;
 		i++;
 	}
+	i = 0;
+	while (string[i] != '\0') {
+		if (string[i] == word[j]) {
+			cmp++;
+			j++;
+		} else {
+			cmp = 0;
+		}
+		
+		if (cmp == len) {
+			res = i - len + 1;
+			break;
+		}
+		i++;
+		if (j == len) {
+			j = 0;
+			cmp = 0;
+		}
+	}
+	return res;
 }
 
 int main () {
@@ -34,35 +43,17 @@ int main () {
 		length++;
 	}
 	string[length] = '\0';
+	printf("%d\n", length);
 	printf("New string:\n");
+	/*printf("%d", strcomp(string, "e.g."));*/
 	while (string[i] != '\0') {
 		if ((string[i] == 'e') && (string[i + 1] == '.') && (string[i + 2] == 'g') && (string[i + 3] == '.')) {
-			sdvig(string, length, i, 14);
-			paste(string, "exempli gratia", i);
-			i += 13;
-		}
-		
-		if ((string[i] == 't') && (string[i + 1] == 'y')) {
-			sdvig(string, length, i, 9);
-			paste(string, "thank you", i);
-			i += 8;
-		}
-		
-		if ((string[i] == 'e') && (string[i + 1] == 't') && (string[i + 2] == 'c')) {
-			sdvig(string, length, i, 9);
-			paste(string, "et cetera", i);
-			i += 8;
-		}
-		
-		if ((string[i] == 'v') && (string[i + 1] == 's')) {
-			sdvig(string, length, i, 6);
-			paste(string, "versus", i);
-			i += 5;
+			printf("exempli gratia");
+			i += 3;
+		} else {
+			printf("%c", string[i]);
 		}
 		i++;
-	}
-	for (i = 0; i < length + 14; i++) {
-		printf("%c", string[i]);
 	}
 	printf("%c\n", '\0');
 	free(string);
