@@ -3,31 +3,22 @@
 /*
 Ввести строку. Вывести её, заменив сокращения на полные слова (т.к. - "так как", т.е. - "то есть", т.д. - "так далее", т.п. - "тому подобное"). Можно использовать английские аналоги.
 */
-int strcomp (char *word, int len, char *reduct) {
-	int i = 0, j = 0, cmp = 0, res = 0;
-	while (word[i] != '\0') {
-		if (word[i] == reduct[j]) {
-			cmp++;
-			j++;
-		} else {
-			break;
-		}
-		if (cmp == len) {
-			res++;
-		}
-		i++;
+int strcomp (char* word, char* reduct) {
+	while ((*word != 0) && (*reduct == *word)) {
+		word++;
+		reduct++;
 	}
-	return res;
+	return *word - *reduct;
 }
 
 char* change (char *word) {
-	if (strcomp(word, 4, "e.g.") == 1) {
+	if (strcomp(word, "e.g.") == 0) {
 		word = "exempli gratia";
 	}
-	if (strcomp(word, 3, "etc") == 1) {
+	if (strcomp(word, "etc") == 0) {
 		word = "et cetera";
 	}
-	if (strcomp(word, 3, "pls") == 1) {
+	if (strcomp(word, "pls") == 0) {
 		word = "please";
 	}
 	return word;
@@ -63,6 +54,7 @@ int word_count (char *string) {
 int main () {
 	int a = 0, length = 0, i = 0, volume = 100, k = 0, j = 0;
 	char *string = malloc (volume * sizeof(char));
+	printf("Input a string:\n");
 	while ((a = getchar()) != '\n') {
 		if (length == volume) {
 			volume *= 2;
