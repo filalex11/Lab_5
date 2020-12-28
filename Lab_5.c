@@ -53,7 +53,7 @@ int word_count (char *string) {
 
 int main () {
 	int a = 0, length = 0, i = 0, volume = 100, k = 0, j = 0;
-	char *string = malloc (volume * sizeof(char));
+	char* string = malloc (volume * sizeof(char));
 	printf("Input a string:\n");
 	while ((a = getchar()) != '\n') {
 		if (length == volume) {
@@ -67,7 +67,7 @@ int main () {
 	printf("New string:\n");
 	int count = word_count(string);
 	i = 0;
-	char **words = (char**)malloc(count * sizeof(char*));
+	char** words = (char**)malloc(count * sizeof(char*));
 	for (i = 0; i < count; i++) {
 		words[i] = (char*)malloc(length * sizeof(char));
 	}
